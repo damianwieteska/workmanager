@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  start_time: 2018-04-14 15:51:12
+  deadline: 2018-04-14 15:51:12
+  priority: 1
+  list_id: 
+  done: false
+
+two:
+  name: MyString
+  description: MyText
+  start_time: 2018-04-14 15:51:12
+  deadline: 2018-04-14 15:51:12
+  priority: 1
+  list_id: 
+  done: false

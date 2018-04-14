@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start: 2018-04-14
+  end: 2018-04-14
+  salary_percentage: 1
+  user_id: 
+  position_id: 
+
+two:
+  start: 2018-04-14
+  end: 2018-04-14
+  salary_percentage: 1
+  user_id: 
+  position_id: 

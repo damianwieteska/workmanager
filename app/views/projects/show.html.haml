@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @project.name
+%p
+  %b Description:
+  = @project.description
+%p
+  %b Visibility:
+  = @project.visibility
+%p
+  %b Start time:
+  = @project.start_time
+%p
+  %b Deadline:
+  = @project.deadline
+%p
+  %b Priority:
+  = @project.priority
+
+= link_to 'Edit', edit_project_path(@project)
+\|
+= link_to 'Back', projects_path

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Level:
+  = @skill_to_user.level
+%p
+  %b User:
+  = @skill_to_user.user
+%p
+  %b Skill:
+  = @skill_to_user.skill
+
+= link_to 'Edit', edit_skill_to_user_path(@skill_to_user)
+\|
+= link_to 'Back', skill_to_users_path

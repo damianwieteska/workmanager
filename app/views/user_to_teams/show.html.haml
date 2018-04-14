@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Role:
+  = @user_to_team.role
+%p
+  %b User:
+  = @user_to_team.user
+%p
+  %b Team:
+  = @user_to_team.team
+
+= link_to 'Edit', edit_user_to_team_path(@user_to_team)
+\|
+= link_to 'Back', user_to_teams_path

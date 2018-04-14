@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @position.name
+%p
+  %b Description:
+  = @position.description
+%p
+  %b Salary:
+  = @position.salary
+%p
+  %b Level:
+  = @position.level
+%p
+  %b Area:
+  = @position.area
+
+= link_to 'Edit', edit_position_path(@position)
+\|
+= link_to 'Back', positions_path

@@ -1,0 +1,23 @@
+%h1 Listing team_to_projects
+
+%table
+  %thead
+    %tr
+      %th Team
+      %th Project
+      %th
+      %th
+      %th
+
+  %tbody
+    - @team_to_projects.each do |team_to_project|
+      %tr
+        %td= team_to_project.team
+        %td= team_to_project.project
+        %td= link_to 'Show', team_to_project
+        %td= link_to 'Edit', edit_team_to_project_path(team_to_project)
+        %td= link_to 'Destroy', team_to_project, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Team to project', new_team_to_project_path
