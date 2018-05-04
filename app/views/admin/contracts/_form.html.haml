@@ -1,0 +1,37 @@
+= render 'layouts/error_messages', object: @contract
+
+.field.form-group
+  .row
+    .col-2
+      = f.label :user
+    .col-10
+      = f.select :user_id, User.all.collect {|u| ["#{ u.first_name } #{ u.last_name }", u.id]}, {}, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      = f.label :position
+    .col-10
+      = f.select :position_id, Position.all.collect {|p| [p.name, p.id]}, {}, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      = f.label :start
+    .col-10
+      = f.text_field :start, class: 'form-control form-datepicker'
+.field.form-group
+  .row
+    .col-2
+      = f.label :end
+    .col-10
+      = f.text_field :end, class: 'form-control form-datepicker'
+.field.form-group
+  .row
+    .col-2
+      = f.label :salary_percentage
+    .col-10
+      = f.number_field :salary_percentage, class: 'form-control'
+.actions
+  = link_to admin_contracts_path do
+    %button.btn.btn-lg.btn-outline-dark
+      Back
+  = f.submit 'Save', class: 'btn btn-lg btn-dark'

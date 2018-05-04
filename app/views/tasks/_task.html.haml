@@ -1,0 +1,8 @@
+%div{ id: "#{task.sortable_id}" }
+  %a{ href: "#task-modal-#{task.id}", data: { toggle: "modal" } }
+    .card.card-body.my-2
+      %p.card-text
+        = task.name
+        %span.badge.badge-success= 'DONE' if task.done
+  = render 'tasks/task_modal', task: task
+  = render 'tasks/edit', task: task

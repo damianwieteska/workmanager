@@ -1,0 +1,30 @@
+%p
+  %b Name:
+  = @position.name
+%p
+  %b Description:
+  = @position.description
+%p
+  %b Salary:
+  = formatted_salary(@position.salary)
+%p
+  %b Level:
+  = @position.level.humanize
+%p
+  %b Area:
+  = @position.area.humanize
+- if @position.users.any?
+  %p
+    %b
+      Users:
+    %ul
+      - @position.users.each do |user|
+        %li
+          = link_to user.full_name, admin_user_path(user)
+
+= link_to admin_positions_path do
+  %button.btn.btn-lg.btn-outline-dark
+    Back
+= link_to edit_admin_position_path(@position) do
+  %button.btn.btn-lg.btn-dark
+    Edit

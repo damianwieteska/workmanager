@@ -1,0 +1,6 @@
+%h1 New skill
+
+.row
+  .col
+    = form_for @skill, url: admin_skills_path do |f|
+      = render 'form', f: f

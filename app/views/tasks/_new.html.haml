@@ -1,0 +1,8 @@
+.collapse{ id: "new-task-collapase-#{list.id}" }
+  .card.card-body
+    = form_for list.tasks.new, url: project_list_tasks_path(@project, list) do |f|
+      = render 'tasks/form', f: f
+      .actions
+        %button.btn.btn-outline-dark{ type: "button", data: { toggle: "collapse", target: "#new-task-collapase-#{list.id}"}, aria: { controls: "new-task-collapase-#{list.id}", expanded: "false" } }
+          Back
+        = f.submit 'Save', class: 'btn btn-dark'

@@ -1,0 +1,20 @@
+%h4 Contract
+- if @user.contracts.any?
+  - @user.contracts.each_with_index do |contract, index|
+    %h3.text-center
+      = contract.position.name
+    %p.text-center
+      = contract.position.level.humanize
+    %p.text-center
+      = contract.position.area.humanize
+    %p.text-center
+      = contract.position.description
+    %p
+      = formatted_date(contract.start)
+      = formatted_date(contract.end) if contract.end
+    %p
+      %b Salary:
+      = formatted_salary(contract.salary_percentage/100.00 * contract.position.salary)
+- else
+  %p.text-center
+    You don't have any contract yet.

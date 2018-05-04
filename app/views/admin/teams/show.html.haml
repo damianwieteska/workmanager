@@ -1,0 +1,24 @@
+%p
+  %b Name:
+  = @team.name
+%p
+  %b Description:
+  = @team.description
+%p
+  %b Durability:
+  = @team.durability.try(:humanize)
+
+- if @team.users.any?
+  %p
+    %b Members:
+  %ul
+    - @team.users.each do |user|
+      %li
+        = formatted_worker(user, user_path(user))
+
+= link_to admin_teams_path do
+  %button.btn.btn-lg.btn-outline-dark
+    Back
+= link_to edit_admin_team_path(@team) do
+  %button.btn.btn-lg.btn-dark
+    Edit

@@ -1,0 +1,23 @@
+= render 'layouts/error_messages', object: @team
+
+.field.form-group
+  = f.text_field :name, placeholder: :name, class: 'form-control'
+.field.form-group
+  = f.text_area :description, placeholder: :description, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      = f.label :durability
+    .col-10
+      = f.select :durability, Team.durabilities.keys.map { |w| [w.humanize, w] }, {}, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      %label Team members:
+    .col-10.checkbox-list
+      %p= f.collection_check_boxes(:user_ids, User.all, :id, :full_name, class: 'form_control')
+.actions
+  = link_to admin_teams_path do
+    %button.btn.btn-lg.btn-outline-dark
+      Back
+  = f.submit 'Save', class: 'btn btn-lg btn-dark'

@@ -16,14 +16,18 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 
+gem 'access-granted', '~> 1.1.0'
+gem 'bootstrap', '~> 4.0.0'
+gem 'bootstrap-datepicker-rails'
 gem 'devise'
 gem 'haml-rails', '~> 1.0'
-gem 'bootstrap', '~> 4.0.0'
+gem 'rails_sortable'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc

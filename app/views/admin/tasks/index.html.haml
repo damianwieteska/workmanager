@@ -1,0 +1,36 @@
+%h1 Tasks
+
+.row
+  .col
+    %table.table.table-striped
+      %thead.thead-dark
+        %tr
+          %th Name
+          %th Description
+          %th Start time
+          %th Deadline
+          %th Priority
+          %th List
+          %th Project
+          %th Done?
+          %th
+          %th
+          %th
+
+      %tbody
+        - @tasks.each do |task|
+          %tr
+            %td= task.name
+            %td= task.description
+            %td= formatted_date(task.start_time)
+            %td= formatted_date(task.deadline)
+            %td= task.priority.try(:humanize)
+            %td= task.list.name
+            %td= link_to task.project.name, admin_project_path(task.project)
+            %td
+              %span.badge.badge-success= 'DONE' if task.done
+            %td= link_to 'Show', admin_task_path(task)
+            %td= link_to 'Edit', edit_admin_task_path(task)
+            %td= link_to 'Destroy', admin_task_path(task), method: :delete, data: { confirm: 'Are you sure?' }
+
+    %br

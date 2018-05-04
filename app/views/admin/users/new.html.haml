@@ -1,0 +1,6 @@
+%h1 New user
+
+.row
+  .col
+    = form_for @user, url: admin_users_path do |f|
+      = render 'form', f: f

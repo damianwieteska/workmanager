@@ -1,39 +1,17 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :set_team, only: [:leave]
+  before_action :set_user, only: [:leave]
 
   respond_to :html
 
-  def index
-    @teams = Team.all
-    respond_with(@teams)
-  end
-
-  def show
-    respond_with(@team)
-  end
-
-  def new
-    @team = Team.new
-    respond_with(@team)
-  end
-
-  def edit
-  end
-
-  def create
-    @team = Team.new(team_params)
-    @team.save
-    respond_with(@team)
-  end
-
-  def update
-    @team.update(team_params)
-    respond_with(@team)
-  end
-
-  def destroy
-    @team.destroy
-    respond_with(@team)
+  def leave
+    respond_to do |format|
+      if @user.teams.delete(@team)
+        format.html { redirect_to dashboard_user_path @user }
+      else
+        format.html { redirect_to dashboard_user_path(@user), flash: { danger: "You can't leave this team." } }
+      end
+    end
   end
 
   private
@@ -41,7 +19,7 @@ class TeamsController < ApplicationController
       @team = Team.find(params[:id])
     end
 
-    def team_params
-      params.require(:team).permit(:name, :description, :durability)
+    def set_user
+      @user = User.find(params[:user_id])
     end
 end

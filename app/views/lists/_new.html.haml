@@ -1,0 +1,12 @@
+#new-list-modal.modal.fade{ tabindex: "-1", role: "dialog", aria: { labelledby: "new-list-modal", hidden: true } }
+  .modal-dialog{ role: "document" }
+    .modal-content
+      .modal-header
+        %h5.modal-title
+          New list
+        %button.close{ data: { dismiss: "modal" }, aria: { label: "Close" } }
+          %span{ aria: { hidden: true } }
+            &times;
+
+      = form_for @project.lists.new, url: project_lists_path(@project.id) do |f|
+        = render 'lists/form', f: f

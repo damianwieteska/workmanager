@@ -1,0 +1,37 @@
+%nav#navbar-top.navbar.navbar-expand-lg.fixed-top
+  .navbar-brand
+    = link_to dashboard_user_path(current_user) do
+      WORKMANAGER
+  %button.navbar-toggler{ type: "button", data: { toggle: "collapse", target: "#menu-navbar" }, aria: { controls: "menu-navbar", expanded: "false", label: "Toggle navigation" } }
+    %span.navbar-toggler-icon
+  #menu-navbar.collapse.navbar-collapse
+    %ul.navbar-nav.mr-auto
+      %li.nav-item.active
+        = link_to admin_projects_path, class: "nav-link" do
+          Projects
+          %span.sr-only
+            (current)
+      %li.nav-item
+        = link_to admin_tasks_path, class: "nav-link" do
+          Tasks
+      %li.nav-item
+        = link_to admin_teams_path, class: "nav-link" do
+          Teams
+      %li.nav-item
+        = link_to admin_users_path, class: "nav-link" do
+          Users
+      %li.nav-item
+        = link_to admin_contracts_path, class: "nav-link" do
+          Contracts
+      %li.nav-item
+        = link_to admin_positions_path, class: "nav-link" do
+          Positions
+      %li.nav-item
+        = link_to admin_skills_path, class: "nav-link" do
+          Skills
+    = link_to dashboard_user_path(current_user), class: "nav-link" do
+      .btn.btn-outline-light
+        Dashboard
+    = link_to destroy_user_session_path, method: :delete, class: "nav-link" do
+      %button.btn.btn-danger
+        Sign out

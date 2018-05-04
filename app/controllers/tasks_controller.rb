@@ -3,37 +3,41 @@ class TasksController < ApplicationController
 
   respond_to :html
 
-  def index
-    @tasks = Task.all
-    respond_with(@tasks)
-  end
-
-  def show
-    respond_with(@task)
-  end
-
-  def new
-    @task = Task.new
-    respond_with(@task)
-  end
-
-  def edit
-  end
-
   def create
-    @task = Task.new(task_params)
-    @task.save
-    respond_with(@task)
+    authorize! :create, Task
+    @project = Project.find(params[:project_id])
+    @task = @project.lists.find(params[:list_id]).tasks.new(task_params)
+    respond_to do |format|
+      if @task.save
+        format.html { redirect_to project_path @project }
+      else
+        format.html { redirect_to project_path(@project), flash: { danger: "Task can't be saved. Please check fields correctness." } }
+      end
+    end
   end
 
   def update
-    @task.update(task_params)
-    respond_with(@task)
+    authorize! :update, @task
+    @project = Project.find(params[:project_id])
+    respond_to do |format|
+      if @task.update(task_params)
+        format.html { redirect_to project_path @project }
+      else
+        format.html { redirect_to project_path(@project), flash: { danger: "Task can't be updated. Please check fields correctness." } }
+      end
+    end
   end
 
   def destroy
-    @task.destroy
-    respond_with(@task)
+    authorize! :destroy, @task
+    @project = Project.find(params[:project_id])
+    respond_to do |format|
+      if @task.destroy
+        format.html { redirect_to project_path @project }
+      else
+        format.html { redirect_to project_path(@project), flash: { danger: "Task can't be deleted." } }
+      end
+    end
   end
 
   private
@@ -42,6 +46,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:name, :description, :start_time, :deadline, :priority, :list_id, :done)
+      params.require(:task).permit(:name, :description, :start_time, :deadline, :priority, :list_id, :user_id, :done)
     end
 end

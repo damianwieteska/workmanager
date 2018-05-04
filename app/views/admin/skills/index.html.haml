@@ -1,0 +1,25 @@
+%h1 Skills
+
+.row
+  .col
+    %table.table.table-striped
+      %thead.thead-dark
+        %tr
+          %th Name
+          %th Kind
+          %th
+          %th
+
+      %tbody
+        - @skills.each do |skill|
+          %tr
+            %td= skill.name
+            %td= skill.kind.try(:humanize)
+            %td= link_to 'Edit', edit_admin_skill_path(skill)
+            %td= link_to 'Destroy', admin_skill_path(skill), method: :delete, data: { confirm: 'Are you sure?' }
+
+    %br
+
+    = link_to new_admin_skill_path do
+      %button.btn.btn-lg.btn-dark
+        New

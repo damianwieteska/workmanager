@@ -1,0 +1,22 @@
+%p
+  %b Start:
+  = formatted_date(@contract.start)
+%p
+  %b End:
+  = formatted_date(@contract.end)
+%p
+  %b Salary percentage:
+  = @contract.salary_percentage
+%p
+  %b User:
+  = link_to @contract.user.full_name, admin_user_path(@contract.user)
+%p
+  %b Position:
+  = link_to @contract.position.name, admin_position_path(@contract.position)
+
+= link_to admin_contracts_path do
+  %button.btn.btn-lg.btn-outline-dark
+    Back
+= link_to edit_admin_contract_path(@contract) do
+  %button.btn.btn-lg.btn-dark
+    Edit

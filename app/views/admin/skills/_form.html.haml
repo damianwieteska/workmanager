@@ -1,0 +1,15 @@
+= render 'layouts/error_messages', object: @skill
+
+.field.form-group
+  = f.text_field :name, placeholder: :name, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      = f.label :kind
+    .col-10
+      = f.select :kind, Skill.kinds.keys.map { |w| [w.humanize, w] }, {}, class: 'form-control'
+.actions
+  = link_to admin_skills_path do
+    %button.btn.btn-lg.btn-outline-dark
+      Back
+  = f.submit 'Save', class: 'btn btn-lg btn-dark'

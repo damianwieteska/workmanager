@@ -1,16 +1,26 @@
-%nav.navbar.navbar-expand-lg.fixed-top.navbar-light.bg-light
+%nav#navbar-top.navbar.navbar-expand-lg.fixed-top
   .navbar-brand
-    = link_to '#' do
+    = link_to dashboard_user_path(current_user) do
       WORKMANAGER
-  %button.navbar-toggler{ type: "button", data: { toggle: "collapse", target: "#navbarSupportedContent" }, aria: { controls: "navbarSupportedContent", expanded: "false", label: "Toggle navigation" } }
+  %button.navbar-toggler{ type: "button", data: { toggle: "collapse", target: "#menu-navbar" }, aria: { controls: "menu-navbar", expanded: "false", label: "Toggle navigation" } }
     %span.navbar-toggler-icon
-  #navbarSupportedContent.collapse.navbar-collapse
+  #menu-navbar.collapse.navbar-collapse
     %ul.navbar-nav.mr-auto
       %li.nav-item.active
-        = link_to '#', class: "nav-link" do
-          Home
+        = link_to dashboard_user_path(current_user), class: "nav-link" do
+          Dashboard
           %span.sr-only
             (current)
       %li.nav-item
-        = link_to '#', class: "nav-link" do
-          Other
+        = link_to projects_path(user_id: current_user.id), class: "nav-link" do
+          Projects
+      %li.nav-item
+        = link_to finished_projects_path(user_id: current_user.id), class: "nav-link" do
+          Finished projects
+    - if current_user.moderator? || current_user.admin?
+      = link_to admin_projects_path, class: "nav-link" do
+        .btn.btn-outline-light
+          Admin panel
+    = link_to destroy_user_session_path, method: :delete, class: "nav-link" do
+      %button.btn.btn-danger
+        Sign out

@@ -1,0 +1,33 @@
+%h1 Contracts
+
+.row
+  .col
+    %table.table.table-striped
+      %thead.thead-dark
+        %tr
+          %th Start
+          %th End
+          %th Salary percentage
+          %th User
+          %th Position
+          %th
+          %th
+          %th
+
+      %tbody
+        - @contracts.each do |contract|
+          %tr
+            %td= formatted_date(contract.start)
+            %td= formatted_date(contract.end)
+            %td= contract.salary_percentage
+            %td= link_to contract.user.full_name, admin_user_path(contract.user)
+            %td= link_to contract.position.name, admin_position_path(contract.position)
+            %td= link_to 'Show', admin_contract_path(contract)
+            %td= link_to 'Edit', edit_admin_contract_path(contract)
+            %td= link_to 'Destroy', admin_contract_path(contract), method: :delete, data: { confirm: 'Are you sure?' }
+
+    %br
+
+    = link_to new_admin_contract_path do
+      %button.btn.btn-lg.btn-dark
+        New

@@ -1,0 +1,6 @@
+%h1 New contract
+
+.row
+  .col
+    = form_for @contract, url: admin_contracts_path do |f|
+      = render 'form', f: f

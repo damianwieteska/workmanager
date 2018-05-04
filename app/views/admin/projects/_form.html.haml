@@ -1,0 +1,47 @@
+= render 'layouts/error_messages', object: @project
+
+.field.form-group
+  = f.text_field :name, placeholder: :name, class: 'form-control'
+.field.form-group
+  = f.text_area :description, placeholder: :description, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      = f.label :visibility
+    .col-10
+      = f.select :visibility, Project.visibilities.keys.map { |w| [w.humanize, w] }, {}, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      = f.label :start_time
+    .col-10
+      = f.text_field :start_time, class: 'form-control form-datepicker'
+.field.form-group
+  .row
+    .col-2
+      = f.label :deadline
+    .col-10
+      = f.text_field :deadline, class: 'form-control form-datepicker'
+.field.form-group
+  .row
+    .col-2
+      = f.label :priority
+    .col-10
+      = f.select :priority, Project.priorities.keys.map { |w| [w.humanize, w] }, {}, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      %label Project teams:
+    .col-10.checkbox-list
+      = f.collection_check_boxes(:team_ids, Team.all, :id, :name, class: 'form_control')
+.field.form-group
+  .row
+    .col-2
+      %label Project members:
+    .col-10.checkbox-list
+      = f.collection_check_boxes(:user_ids, User.all, :id, :full_name, class: 'form_control')
+.actions
+  = link_to admin_projects_path do
+    %button.btn.btn-lg.btn-outline-dark
+      Back
+  = f.submit 'Save', class: 'btn btn-lg btn-dark'

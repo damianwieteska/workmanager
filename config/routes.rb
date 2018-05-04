@@ -1,16 +1,36 @@
 Rails.application.routes.draw do
-  resources :team_to_projects
-  resources :user_to_projects
-  resources :tasks
-  resources :lists
-  resources :projects
-  resources :user_to_teams
-  resources :teams
-  resources :skill_to_users
-  resources :skills
-  resources :contracts
-  resources :positions
-  devise_for :users
+
+  root to: 'static_pages#landing'
+  get 'landing', to: 'static_pages#landing'
+
+  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', confirmations: 'users/confirmations', passwords: 'users/passwords' }
+
+  resources :projects, only: [:show, :index] do
+    get :finished, on: :collection
+    patch :leave, on: :member
+    resources :lists, only: [:create, :update, :destroy] do
+      resources :tasks, only: [:create, :update, :destroy]
+    end    
+  end
+
+  resources :teams, only: [] do
+    patch :leave, on: :member
+  end
+
+  resources :users do
+    get :dashboard, on: :member
+  end
+
+  namespace :admin do
+    resources :tasks, except: [:create, :new]
+    resources :lists, expect: [:new, :create, :edit, :update]
+    resources :projects
+    resources :teams
+    resources :skills, except: [:show]
+    resources :contracts
+    resources :positions
+    resources :users
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
