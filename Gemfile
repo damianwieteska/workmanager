@@ -29,6 +29,8 @@ gem 'devise'
 gem 'haml-rails', '~> 1.0'
 gem 'rails_sortable'
 
+gem 'puma'
+gem 'rails_12factor'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
@@ -46,4 +48,4 @@ gem 'spring',        group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-
+ruby "2.3.1"
