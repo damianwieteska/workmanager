@@ -1,0 +1,17 @@
+.modal.fade{ id: "edit-task-modal-#{task.id}", tabindex: "-1", role: "dialog", aria: { labelledby: "edit-task-modal-#{task.id}", hidden: true } }
+  .modal-dialog{ role: "document" }
+    .modal-content
+      .modal-header
+        %h5.modal-title
+          = "Edit #{ task.name }"
+        %button.close{ data: { dismiss: "modal" }, aria: { label: "Close" } }
+          %span{ aria: { hidden: true } }
+            &times;
+
+      = form_for task, url: project_list_task_path(@project.id, task.list.id, task.id), method: :patch do |f|
+        .modal-body
+          = render 'tasks/form', f: f
+        .modal-footer
+          %button.btn.btn-outline-dark{ data: { dismiss: "modal" } }
+            Close
+          = f.submit 'Save', class: 'btn btn-dark'

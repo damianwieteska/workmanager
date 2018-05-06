@@ -1,0 +1,6 @@
+%h1 Editing skill
+
+.row
+  .col
+    = form_for @skill, url: admin_skill_path, method: :patch do |f|
+      = render 'form', f: f

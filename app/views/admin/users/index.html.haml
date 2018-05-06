@@ -1,0 +1,43 @@
+%h1 Projects
+
+.row
+  .col
+    %table.table.table-striped
+      %thead.thead-dark
+        %tr
+          %th First Name
+          %th Last Name
+          %th Email
+          %th Country
+          %th City
+          %th Phone
+          %th Facebook URL
+          %th LinkedIn URL
+          %th Birthdate
+          %th Birth Country
+          %th
+          %th
+          %th
+
+      %tbody
+        - @users.each do |user|
+          %tr
+            %td= user.first_name
+            %td= user.last_name
+            %td= user.email
+            %td= user.country
+            %td= user.city
+            %td= user.phone
+            %td= user.facebook_url
+            %td= user.linkedin_url
+            %td= formatted_birthdate(user.birthdate)
+            %td= user.birth_country
+            %td= link_to 'Show', admin_user_path(user)
+            %td= link_to 'Edit', edit_admin_user_path(user)
+            %td= link_to 'Destroy', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }
+
+    %br
+
+    = link_to new_admin_user_path do
+      %button.btn.btn-lg.btn-dark
+        New

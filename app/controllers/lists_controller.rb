@@ -1,39 +1,43 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_list, only: [:update, :destroy]
 
   respond_to :html
 
-  def index
-    @lists = List.all
-    respond_with(@lists)
-  end
-
-  def show
-    respond_with(@list)
-  end
-
-  def new
-    @list = List.new
-    respond_with(@list)
-  end
-
-  def edit
-  end
-
   def create
-    @list = List.new(list_params)
-    @list.save
-    respond_with(@list)
+    authorize! :create, List
+    @project = Project.find(params[:project_id])
+    @list = @project.lists.new(list_params)
+    respond_to do |format|
+      if @list.save
+        format.html { redirect_to project_path @project }
+      else
+        format.html { redirect_to project_path(@project), flash: { danger: "List name can't be empty." } }
+      end
+    end
   end
 
   def update
-    @list.update(list_params)
-    respond_with(@list)
+    authorize! :update, @list
+    @project = Project.find(params[:project_id])
+    respond_to do |format|
+      if @list.update(list_params)
+        format.html { redirect_to project_path @project }
+      else
+        format.html { redirect_to project_path(@project), flash: { danger: "List name can't be empty." } }
+      end
+    end
   end
 
   def destroy
-    @list.destroy
-    respond_with(@list)
+    authorize! :destroy, @list
+    @project = Project.find(params[:project_id])
+    respond_to do |format|
+      if @list.destroy
+        format.html { redirect_to project_path @project }
+      else
+        format.html { redirect_to project_path(@project), flash: { danger: "List can't be deleted." } }
+      end
+    end
   end
 
   private
@@ -42,6 +46,6 @@ class ListsController < ApplicationController
     end
 
     def list_params
-      params.require(:list).permit(:name, :project_id)
+      params.require(:list).permit(:name)
     end
 end

@@ -1,0 +1,3 @@
+- flash.each do |key, value|
+  - Array(value).each do |message|
+    = content_tag :div, message, class: "alert alert-#{key}"

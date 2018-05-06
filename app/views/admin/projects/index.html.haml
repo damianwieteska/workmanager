@@ -1,0 +1,35 @@
+%h1 Projects
+
+.row
+  .col
+    %table.table.table-striped
+      %thead.thead-dark
+        %tr
+          %th Name
+          %th Description
+          %th Visibility
+          %th Start time
+          %th Deadline
+          %th Priority
+          %th
+          %th
+          %th
+
+      %tbody
+        - @projects.each do |project|
+          %tr
+            %td= project.name
+            %td= project.description
+            %td= project.visibility.try(:humanize)
+            %td= project.start_time.strftime("%A, %d %B %Y")
+            %td= formatted_date(project.deadline)
+            %td= project.priority.try(:humanize)
+            %td= link_to 'Show', admin_project_path(project)
+            %td= link_to 'Edit', edit_admin_project_path(project)
+            %td= link_to 'Destroy', admin_project_path(project), method: :delete, data: { confirm: 'Are you sure?' }
+
+    %br
+
+    = link_to new_admin_project_path do
+      %button.btn.btn-lg.btn-dark
+        New

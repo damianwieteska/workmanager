@@ -1,0 +1,6 @@
+%h1 New team
+
+.row
+  .col
+    = form_for @team, url: admin_teams_path do |f|
+      = render 'form', f: f

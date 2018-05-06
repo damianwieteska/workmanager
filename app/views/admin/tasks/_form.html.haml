@@ -1,0 +1,32 @@
+= render 'layouts/error_messages', object: @task
+
+.field.form-group
+  = f.text_field :name, placeholder: :name, class: 'form-control'
+.field.form-group
+  = f.text_area :description, placeholder: :description, class: 'form-control'
+.field.form-group
+  .row
+    .col
+      %p= f.text_field :start_time, placeholder: :start_time, class: 'form-control form-datepicker'
+.field.form-group
+  .row
+    .col
+      %p= f.text_field :deadline, placeholder: :deadline, class: 'form-control form-datepicker'
+.field.form-group
+  .row
+    .col-2
+      = f.label :priority
+    .col-10
+      = f.select :priority, Task.priorities.keys.map { |w| [w.humanize, w] }, {}, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      Assign to:
+    .col-10
+      = f.select :user_id, User.all.map { |u| [u.full_name, u.id] }, { include_blank: "Choose..." }, class: 'form-control'
+.actions
+  = link_to admin_tasks_path do
+    %button.btn.btn-lg.btn-outline-dark
+      Back
+  = f.submit 'Save', class: 'btn btn-lg btn-dark'
+

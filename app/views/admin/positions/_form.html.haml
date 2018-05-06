@@ -1,0 +1,30 @@
+= render 'layouts/error_messages', object: @position
+
+.field.form-group
+  = f.text_field :name, placeholder: :name, class: 'form-control'
+.field.form-group
+  = f.text_area :description, placeholder: :description, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      = f.label :salary
+      ($)
+    .col-10
+      = f.text_field :salary, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      = f.label :level
+    .col-10
+      = f.select :level, Position.levels.keys.map { |w| [w.humanize, w] }, {}, class: 'form-control'
+.field.form-group
+  .row
+    .col-2
+      = f.label :area
+    .col-10
+      = f.select :area, Position.areas.keys.map { |w| [w.humanize, w] }, {}, class: 'form-control'
+.actions
+  = link_to admin_positions_path do
+    %button.btn.btn-lg.btn-outline-dark
+      Back
+  = f.submit 'Save', class: 'btn btn-lg btn-dark'

@@ -1,24 +1,46 @@
-%p#notice= notice
+.row
+  .col
+    = link_to projects_path(user_id: current_user) do
+      %button.btn.btn-outline-dark
+        Back
+    - if @project.id.in? current_user.projects.ids
+      = link_to leave_project_path(@project, user_id: current_user.id), method: :patch do
+        %button.btn.btn-danger
+          Leave project
+    %h1.text-center= @project.name
+    %nav
+      #nav-tab.nav.nav-tabs{ role: "tablist" }
+        %a#nav-tasks-tab.nav-item.nav-link.active{ data: { toggle: "tab" }, href: "#nav-tasks", role: "tab", aria: { controls: "nav-tasks", selected: "true" } }
+          Tasks
+        %a#nav-info-tab.nav-item.nav-link{ data: { toggle: "tab" }, href: "#nav-info", role: "tab", aria: { controls: "nav-info", selected: "false" } }
+          Info
+    #nav-tabContent.tab-content
+      #nav-tasks.tab-pane.fade.show.active{ role: "tabpanel", aria: { labelledby: "nav-tasks-tab" } }
+        %button.btn.btn-dark.m-3{ data: { toggle: "modal", target: "#new-list-modal" } }
+          Add list
+        .row.sortable-lists
+          = render @project.lists
+      #nav-info.tab-pane.fade{ role: "tabpanel", aria: { labelledby: "nav-info-tab" } }
+        .row
+          .col.m-3
+            %p.text-right= "Started on #{formatted_date(@project.start_time)}" if @project.start_time
+            %h3.text-center= "Deadline on #{formatted_date(@project.deadline)}" if @project.deadline
+            %h5.text-center= "Priority: #{@project.priority.humanize}"
+            %p= @project.description
+            - if @project.teams.any?
+              %p.font-weight-bold
+                Teams:
+              - @project.teams.each do |team|
+                %p
+                  = "#{team.name}:"
+                  %ul
+                  - team.users.each do |user|
+                    %li
+                      = formatted_worker(user, user_path(user))
+            - if @project.users.any?
+              %p.font-weight-bold
+                Members:
+              - @project.users.each do |user|
+                %p= formatted_worker(user, user_path(user))
 
-%p
-  %b Name:
-  = @project.name
-%p
-  %b Description:
-  = @project.description
-%p
-  %b Visibility:
-  = @project.visibility
-%p
-  %b Start time:
-  = @project.start_time
-%p
-  %b Deadline:
-  = @project.deadline
-%p
-  %b Priority:
-  = @project.priority
-
-= link_to 'Edit', edit_project_path(@project)
-\|
-= link_to 'Back', projects_path
+= render 'lists/new'

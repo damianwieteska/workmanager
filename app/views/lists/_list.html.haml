@@ -1,0 +1,18 @@
+.col{ id: "#{list.sortable_id}" }
+  .card
+    %h5.card-header
+      = list.name
+      = link_to project_list_path(@project, list), method: :delete, data: { confirm: 'Are you sure?' } do
+        .btn.btn-sm.btn-danger.float-right
+          Delete
+      .btn.btn-sm.btn-outline-dark.float-right{ data: { toggle: "modal", target: "#edit-list-modal-#{list.id}" } }
+        Edit
+    .card-body
+      .card-text
+        .sortable-tasks
+          = render list.tasks
+        %button.btn.btn-outline-dark{ type: "button", data: { toggle: "collapse", target: "#new-task-collapase-#{list.id}"}, aria: { controls: "new-task-collapase-#{list.id}", expanded: "false" } }
+          Add task
+        = render 'tasks/new', list: list
+  .edit-list-modal
+    = render 'lists/edit', list: list

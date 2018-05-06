@@ -1,0 +1,31 @@
+%p
+  %b Name:
+  = @task.name
+%p
+  %b Description:
+  = @task.description
+%p
+  %b Start time:
+  = formatted_date(@task.start_time)
+%p
+  %b Deadline:
+  = formatted_date(@task.deadline)
+%p
+  %b Priority:
+  = @task.priority.humanize
+%p
+  %b List:
+  = @task.list.name
+%p
+  %span.badge.badge-success= 'DONE' if @task.done
+- if @task.user
+  %p
+    %b Member:
+    = formatted_worker(@task.user, admin_user_path(@task.user))
+
+= link_to admin_tasks_path do
+  %button.btn.btn-lg.btn-outline-dark
+    Back
+= link_to edit_admin_task_path(@task) do
+  %button.btn.btn-lg.btn-dark
+    Edit

@@ -1,0 +1,50 @@
+%p
+  %b Name:
+  = @user.full_name
+%p
+  %b Email:
+  = @user.email
+%p
+  %b Role:
+  = @user.role.humanize
+%p
+  %b City:
+  = "#{ @user.city }, #{ @user.country }"
+%p
+  %b Phone:
+  = @user.phone
+%p
+  %b Facebook URL:
+  = @user.facebook_url
+%p
+  %b LinkedIn URL:
+  = @user.linkedin_url
+%p
+  %b Birthdate:
+  = "#{ formatted_birthdate(@user.birthdate) } (#{ @user.birth_country })"
+- if @user.skills.any?
+  %p
+    %b Skills:
+    - @user.skills.each do |skill|
+      = "#{ skill.name }; "
+- if @user.teams.any?
+  %p
+    %b Teams:
+  %ul
+    - @user.teams.each do |team|
+      %li
+        = link_to team.name, admin_team_path(team)
+- if @user.positions.any?
+  %p
+    %b Positions:
+  %ul
+    - @user.positions.each do |position|
+      %li
+        = link_to "#{position.name} - #{position.level.humanize} #{position.area.humanize}", admin_position_path(position)
+
+= link_to admin_users_path do
+  %button.btn.btn-lg.btn-outline-dark
+    Back
+= link_to edit_admin_user_path(@user) do
+  %button.btn.btn-lg.btn-dark
+    Edit

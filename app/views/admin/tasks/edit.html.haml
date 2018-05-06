@@ -1,0 +1,6 @@
+%h1 Editing task
+
+.row
+  .col
+    = form_for @task, url: admin_task_path, method: :patch do |f|
+      = render 'form', f: f

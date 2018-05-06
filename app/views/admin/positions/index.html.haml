@@ -1,0 +1,33 @@
+%h1 Positions
+
+.row
+  .col
+    %table.table.table-striped
+      %thead.thead-dark
+        %tr
+          %th Name
+          %th Description
+          %th Salary
+          %th Level
+          %th Area
+          %th
+          %th
+          %th
+
+      %tbody
+        - @positions.each do |position|
+          %tr
+            %td= position.name
+            %td= position.description
+            %td= formatted_salary(position.salary)
+            %td= position.level.try(:humanize)
+            %td= position.area.try(:humanize)
+            %td= link_to 'Show', admin_position_path(position)
+            %td= link_to 'Edit', edit_admin_position_path(position)
+            %td= link_to 'Destroy', admin_position_path(position), method: :delete, data: { confirm: 'Are you sure?' }
+
+    %br
+
+    = link_to new_admin_position_path do
+      %button.btn.btn-lg.btn-dark
+        New

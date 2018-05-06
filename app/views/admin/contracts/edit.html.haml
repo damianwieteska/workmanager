@@ -1,0 +1,6 @@
+%h1 Editing contract
+
+.row
+  .col
+    = form_for @contract, url: admin_contract_path, method: :patch do |f|
+      = render 'form', f: f

@@ -1,0 +1,6 @@
+%h1 New position
+
+.row
+  .col
+    = form_for @position, url: admin_positions_path do |f|
+      = render 'form', f: f
