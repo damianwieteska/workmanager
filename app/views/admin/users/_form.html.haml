@@ -24,6 +24,14 @@
       = f.text_field :birthdate, class: 'form-control form-datepicker'
 .field.form-group
   = f.text_field :birth_country, placeholder: :birth_country, class: 'form-control'
+- if current_user.admin?
+
+  .field.form-group
+    .row
+      .col-2
+        = f.label :role
+      .col-10
+        = f.select :role, User.roles.keys.map { |w| [w.humanize, w] }, {}, class: 'form-control'
 .field.form-group
   .row
     .col-2

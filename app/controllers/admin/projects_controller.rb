@@ -5,7 +5,11 @@ class Admin::ProjectsController < Admin::AdminController
 
   def index
     authorize! :read, Project
-    @projects = Project.all
+    if current_user.admin?
+      @projects = Project.all
+    else
+      @projects = Project.where.not(visibility: Project.visibilities[:secret])
+    end
     respond_with(:admin, @projects)
   end
 

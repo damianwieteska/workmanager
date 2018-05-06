@@ -2,7 +2,10 @@
   .card
     %h5.card-header
       = list.name
-      .btn.btn-outline-dark.float-right{ data: { toggle: "modal", target: "#edit-list-modal-#{list.id}" } }
+      = link_to project_list_path(@project, list), method: :delete, data: { confirm: 'Are you sure?' } do
+        .btn.btn-sm.btn-danger.float-right
+          Delete
+      .btn.btn-sm.btn-outline-dark.float-right{ data: { toggle: "modal", target: "#edit-list-modal-#{list.id}" } }
         Edit
     .card-body
       .card-text

@@ -5,6 +5,9 @@
   %b Email:
   = @user.email
 %p
+  %b Role:
+  = @user.role.humanize
+%p
   %b City:
   = "#{ @user.city }, #{ @user.country }"
 %p
