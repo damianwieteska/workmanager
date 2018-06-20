@@ -1,8 +1,11 @@
-class TeamsController < ApplicationController
+class Api::TeamsController < Api::ApiController
   before_action :set_team, only: [:leave]
-  before_action :set_user, only: [:leave]
+  before_action :set_user, only: [:leave, :index]
 
-  respond_to :html
+  def index
+    @teams = @user.teams
+    respond_with(@teams)
+  end
 
   def leave
     respond_to do |format|

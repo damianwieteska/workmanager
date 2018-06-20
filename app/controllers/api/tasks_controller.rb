@@ -1,10 +1,7 @@
-class TasksController < ApplicationController
+class Api::TasksController < Api::ApiController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
-
   def create
-    authorize! :create, Task
     @project = Project.find(params[:project_id])
     @task = @project.lists.find(params[:list_id]).tasks.new(task_params)
     respond_to do |format|
@@ -17,7 +14,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    authorize! :update, @task
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @task.update(task_params)
@@ -29,7 +25,6 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    authorize! :destroy, @task
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @task.destroy

@@ -1,23 +1,18 @@
-class ProjectsController < ApplicationController
+class Api::ProjectsController < Api::ApiController
   before_action :set_project, only: [:show, :leave]
   before_action :set_user, only: [:index, :finished, :leave]
 
-  respond_to :html
-
   def index
-    authorize! :read, Project
     @projects = @user.all_projects.where("deadline > ? OR deadline IS NULL", DateTime.now)
     respond_with(@projects)
   end
 
   def finished
-    authorize! :read, Project
     @projects = @user.all_projects.where("deadline < ?", DateTime.now)
     respond_with(@projects)
   end
 
   def show
-    authorize! :read, @project
     respond_with(@project)
   end
 
@@ -38,9 +33,5 @@ class ProjectsController < ApplicationController
 
     def set_user
       @user = User.find(params[:user_id])
-    end
-
-    def project_params
-      params.require(:project).permit(:name, :description, :visibility, :start_time, :deadline, :priority)
     end
 end

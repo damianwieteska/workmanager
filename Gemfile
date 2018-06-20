@@ -31,6 +31,8 @@ gem 'rails_sortable'
 
 # React managing gem
 gem 'webpacker', '~> 3.5'
+gem 'rack-cors', require: 'rack/cors'
+gem 'devise_token_auth'
 
 gem 'puma'
 gem 'rails_12factor'

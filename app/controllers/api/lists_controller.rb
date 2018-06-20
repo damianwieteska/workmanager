@@ -1,10 +1,7 @@
-class ListsController < ApplicationController
+class Api::ListsController < Api::ApiController
   before_action :set_list, only: [:update, :destroy]
 
-  respond_to :html
-
   def create
-    authorize! :create, List
     @project = Project.find(params[:project_id])
     @list = @project.lists.new(list_params)
     respond_to do |format|
@@ -17,7 +14,6 @@ class ListsController < ApplicationController
   end
 
   def update
-    authorize! :update, @list
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @list.update(list_params)
@@ -29,7 +25,6 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    authorize! :destroy, @list
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @list.destroy

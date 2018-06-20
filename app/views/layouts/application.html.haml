@@ -7,7 +7,7 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    - if current_user
+    - if current_api_user
       = render 'layouts/navbar'
     #site-container
       = render 'layouts/flash_messages'

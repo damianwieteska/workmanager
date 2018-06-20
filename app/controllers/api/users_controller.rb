@@ -1,37 +1,25 @@
-class UsersController < ApplicationController
+class Api::UsersController < Api::ApiController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :dashboard]
 
-  respond_to :html
-
   def index
-    authorize! :read, @users
+    #authorize! :read, @users
     @users = User.all
     respond_with(@users)
   end
 
   def show
-    authorize! :read, @user
+    #authorize! :read, @user
     respond_with(@user)
   end
 
   def dashboard
-    authorize! :update, @user
+    #authorize! :update, @user
     @projects = @user.all_projects.where("deadline > ? OR deadline IS NULL", DateTime.now)
     respond_with(@user)
   end
 
-  def new
-    authorize! :create, User
-    @user = User.new
-    respond_with(@user)
-  end
-
-  def edit
-    authorize! :update, @user
-  end
-
   def create
-    authorize! :create, User
+    #authorize! :create, User
     @user = User.new(user_params)
     @user.skip_password_validation = true
 
@@ -45,7 +33,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    authorize! :update, @user
+    #authorize! :update, @user
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to dashboard_user_path @user }
@@ -56,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    authorize! :destroy, @user
+    #authorize! :destroy, @user
     @user.destroy
     respond_with(@user)
   end
