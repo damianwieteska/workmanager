@@ -19,9 +19,9 @@ class Api::ProjectsController < Api::ApiController
   def leave
     respond_to do |format|
       if @user.projects.delete(@project)
-        format.html { redirect_to dashboard_user_path @user }
+        format.json { render json: @project, status: :ok }
       else
-        format.html { redirect_to project_path(@project), flash: { danger: "You can't leave this project." } }
+        format.json { render error: "You can't leave this project.", status: :bad_request }
       end
     end
   end

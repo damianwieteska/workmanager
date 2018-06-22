@@ -1,5 +1,11 @@
 class Api::ListsController < Api::ApiController
   before_action :set_list, only: [:update, :destroy]
+  before_action :set_project, only: [:index]
+
+  def index
+    @lists = @project.lists
+    respond_with(@lists)
+  end
 
   def create
     @project = Project.find(params[:project_id])
@@ -38,6 +44,10 @@ class Api::ListsController < Api::ApiController
   private
     def set_list
       @list = List.find(params[:id])
+    end
+
+    def set_project
+      @project = Project.find(params[:project_id])
     end
 
     def list_params

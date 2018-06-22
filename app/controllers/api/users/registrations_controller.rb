@@ -3,6 +3,8 @@
 class Api::Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
+  protect_from_forgery with: :null_session, only: Proc.new { |c| c.request.format.json? }
+  respond_to :json
 
   # GET /resource/sign_up
   def new
@@ -11,7 +13,14 @@ class Api::Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
+    @user = User.new(user_params)
+
+    if @user.save
+      render json: @user, status: :ok
+    else
+      p @user.errors.full_messages.to_s
+      render error: @user.errors.full_messages.to_s, status: :conflict
+    end
   end
 
   # GET /resource/edit
@@ -38,7 +47,7 @@ class Api::Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
@@ -59,4 +68,8 @@ class Api::Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+    def user_params
+      params.permit(:email, :first_name, :last_name, :country, :city, :phone, :facebook_url, :linkedin_url, :birthdate, :birth_country, :role, :uid, :provider, :password, :password_confirmation)
+    end
 end

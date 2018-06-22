@@ -10,9 +10,9 @@ class Api::TeamsController < Api::ApiController
   def leave
     respond_to do |format|
       if @user.teams.delete(@team)
-        format.html { redirect_to dashboard_user_path @user }
+        format.json { render json: @team, status: :ok }
       else
-        format.html { redirect_to dashboard_user_path(@user), flash: { danger: "You can't leave this team." } }
+        format.json { render error: "You can't leave this team.", status: :bad_request }
       end
     end
   end

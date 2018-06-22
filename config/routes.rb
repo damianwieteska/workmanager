@@ -4,12 +4,14 @@ Rails.application.routes.draw do
   get 'landing', to: 'static_pages#landing'
 
   namespace :api, defaults: { format: :json } do
-    mount_devise_token_auth_for 'User', at: 'users'
+    mount_devise_token_auth_for 'User', at: 'users', controllers: {
+      registrations: 'api/users/registrations'
+    }
 
     resources :projects, only: [:show, :index] do
       get :finished, on: :collection
       patch :leave, on: :member
-      resources :lists, only: [:create, :update, :destroy] do
+      resources :lists, only: [:index, :create, :update, :destroy] do
         resources :tasks, only: [:create, :update, :destroy]
       end    
     end

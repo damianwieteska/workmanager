@@ -33,12 +33,11 @@ class Api::UsersController < Api::ApiController
   end
 
   def update
-    #authorize! :update, @user
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to dashboard_user_path @user }
+        format.json { render json: @user, status: :ok }
       else
-        format.html { render :edit }
+        format.json { render json: { error: @user.errors.full_messages }, status: :bad_request }
       end
     end
   end
