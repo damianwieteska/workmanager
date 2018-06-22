@@ -9,6 +9,10 @@ class TeamList extends React.Component {
         this.props.dispatch(teamActions.getForUser(this.props.user.data.id));
     }
 
+    handleLeaveTeam(id) {
+        return (e) => this.props.dispatch(teamActions.leave(id, this.props.user.data.id));
+    }
+
     render() {
         const { user, teams } = this.props;
         return (~
@@ -21,6 +25,7 @@ class TeamList extends React.Component {
                   	.list-group-item.list-group-item-action(key={index})
                       %h5
                         {team.name}
+                      %a(onClick={this.handleLeaveTeam(team.id)})
                         %button.btn.btn-danger.float-right
                           Leave team
                       %p

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ProjectList } from '../ProjectList';
 import { TeamList } from '../TeamList';
+import { ContractList } from '../ContractList';
 import { Profile } from '../Profile';
 import { projectActions } from '../_actions';
 
@@ -20,10 +21,10 @@ class Dashboard extends React.Component {
               .col-6.my-3.border-right
                 %h4 Projects
                 %ProjectList(projects={projects})
-                %Link(to={'projects'})
+                %Link(to={'/projects'})
                   %button.btn.btn-dark
                     View all
-                %Link(to={'projects/finished'})
+                %Link(to={'/projects/finished'})
                   %button.btn.btn-outline-dark
                     Finished
 
@@ -34,6 +35,8 @@ class Dashboard extends React.Component {
             .row.border-top
               .col-6.my-3.border-right
                 %Profile
+              .col-6.my-3
+                %ContractList
         ~);
     }
 }

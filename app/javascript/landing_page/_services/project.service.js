@@ -1,11 +1,22 @@
 import { authHeader, axiosInstance } from '../_helpers';
 
 export const projectService = {
+    get,
     getForUser,
-    getFinishedForUser
+    getFinishedForUser,
+    leave
 };
 
 const apiUrl = 'http://localhost:3000/api';
+
+function get(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${apiUrl}/projects/${id}`, requestOptions).then(handleResponse);
+}
 
 function getForUser(user_id) {
     const requestOptions = {
@@ -23,6 +34,15 @@ function getFinishedForUser(user_id) {
     };
 
     return fetch(`${apiUrl}/projects/finished?user_id=${user_id}`, requestOptions).then(handleResponse);
+}
+
+function leave(id, user_id) {
+    const requestOptions = {
+        method: 'PATCH',
+        headers: authHeader()
+    };
+ 
+    return fetch(`${apiUrl}/projects/${id}/leave?user_id=${user_id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

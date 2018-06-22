@@ -3,31 +3,30 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../_actions';
 import { Error } from '../Error';
+import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 
-class SignUp extends React.Component {
+class UserForm extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             user: {
-                first_name: '',
-                last_name: '',
-                country: '',
-                city: '',
-                phone: '',
-                facebook_url: '',
-                linkedin_url: '',
-                birthdate: '',
-                birth_country: '',
-                email: '',
-                password: '',
-                password_confirmation: ''
+            	id: this.props.user.id,
+                first_name: this.props.user.first_name || '',
+                last_name: this.props.user.last_name || '',
+                country: this.props.user.country || '',
+                city: this.props.user.city || '',
+                phone: this.props.user.phone || '',
+                facebook_url: this.props.user.facebook_url || '',
+                linkedin_url: this.props.user.linkedin_url || '',
+                birthdate: this.props.user.birthdate || '',
+                birth_country: this.props.user.birth_country || '',
+                email: this.props.user.email || ''
             },
             errors: {
               first_name: '',
               last_name: '',
-              email: '',
-              password: ''
+              email: ''
             },
             submitted: false
         };
@@ -54,17 +53,16 @@ class SignUp extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const { user, errors } = this.state;
-        const { dispatch } = this.props;
+        const { dispatch, authentication } = this.props;
 
         this.setState({submitted: true,
             errors: {
               first_name: this.validateField('first_name', user.first_name),
               last_name: this.validateField('last_name', user.last_name),
               email: this.validateField('email', user.email),
-              password: this.validateField('password', user.password)
             }});
-        if (!this.validateField('first_name', user.first_name) && !this.validateField('last_name', user.last_name) && !this.validateField('email', user.email) && !this.validateField('password', user.password)) {
-            dispatch(userActions.register(user));
+        if (!this.validateField('first_name', user.first_name) && !this.validateField('last_name', user.last_name) && !this.validateField('email', user.email)) {
+            dispatch(userActions.update(user, authentication.user.data));
         }
     }
 
@@ -74,18 +72,6 @@ class SignUp extends React.Component {
           return value ? '' : "First name can't be blank";
         case 'last_name':
           return value ? '' : "Last name can't be blank";
-        case 'password':
-          if(value) {
-            return this.state.user.password_confirmation == value ? '' : "Password confirmation doesn't match Password";
-          } else {
-            return "Password can't be blank";
-          }
-        case 'password_confirmation':
-          if(value) {
-            return this.state.user.password == value ? '' : "Password confirmation doesn't match Password";
-          } else {
-            return "Password can't be blank";
-          }
         case 'email':
           return value ? '' : "Email can't be blank";
        default:
@@ -94,18 +80,16 @@ class SignUp extends React.Component {
     }
 
     render() {
-        const { registering  } = this.props;
         const { user, errors, submitted } = this.state;
         return (~
           %div
-            %h2
-              Sign up
+            %h1
+              Editing user
             .row
               .col
                 %form(name="form" onSubmit={this.handleSubmit})
 
                   %Error(error={errors.email})
-                  %Error(error={errors.password})
                   %Error(error={errors.first_name})
                   %Error(error={errors.last_name})
 
@@ -134,29 +118,23 @@ class SignUp extends React.Component {
                     %input( type="text" class="form-control" name="birth_country" value={user.birth_country} onChange={this.handleChange} placeholder="Birth country" )
                   %div(class={'field form-group' + ( errors.email ? ' field_with_errors' : '' ) })
                     %input( type="email" class="form-control" name="email" value={user.email} onChange={this.handleChange} placeholder="Email" autoComplete="email" )
-                  %div(class={'field form-group' + ( errors.password ? ' field_with_errors' : '' ) })
-                    %input( type="password" class="form-control" name="password" value={user.password} onChange={this.handleChange} placeholder="Password" autoComplete="off" )
-                  %div(class={'field form-group' + ( errors.password ? ' field_with_errors' : '' ) })
-                    %input( type="password" class="form-control" name="password_confirmation" value={user.password_confirmation} onChange={this.handleChange} placeholder="Password confirmation" autoComplete="off" )
 
                   .actions
-                    %button(type="submit" name="commit"  value="Sign up" class="btn btn-lg btn-dark")
-                      Sign up
-
-                .btn-group(role="group")
-                  %Link(to="/login")
-                    .btn.btn-outline-dark
-                      Login
+                    %Link(to="/dashboard")
+                      .btn.btn-outline-dark.btn-lg
+                        Back
+                    %button(type="submit" name="commit"  value="Save" class="btn btn-lg btn-dark")
+                      Save
         ~);
     }
 }
 
 function mapStateToProps(state) {
-    const { registering } = state.registration;
+    const { authentication } = state;
     return {
-        registering
+        authentication
     };
 }
 
-const connectedSignUp = connect(mapStateToProps)(SignUp);
-export { connectedSignUp as SignUp };
+const connectedUserForm = connect(mapStateToProps)(UserForm);
+export { connectedUserForm as UserForm };

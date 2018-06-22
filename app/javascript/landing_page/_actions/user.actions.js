@@ -7,8 +7,8 @@ export const userActions = {
     login,
     logout,
     register,
-    getAll,
-    delete: _delete
+    get,
+    update
 };
 
 function login(email, password) {
@@ -20,6 +20,7 @@ function login(email, password) {
                 user => { 
                     dispatch(success(user));
                     history.push('/dashboard');
+                    dispatch(alertActions.success('Signed in successfully.'));
                 },
                 error => {
                     dispatch(failure(error));
@@ -42,7 +43,7 @@ function register(user) {
     return dispatch => {
         dispatch(request(user));
 
-        userService.register(user)
+        userService.register({...user, confirm_success_url: '', provider: 'email', uid: user.email })
             .then(
                 user => { 
                     dispatch(success());
@@ -61,39 +62,45 @@ function register(user) {
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
-function getAll() {
+function get(id) {
     return dispatch => {
-        dispatch(request());
+        dispatch(request(id));
 
-        userService.getAll()
+        userService.get(id)
             .then(
-                users => dispatch(success(users)),
+                user => dispatch(success(user)),
                 error => dispatch(failure(error))
             );
     };
 
-    function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
-    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+    function request(id) { return { type: userConstants.GET_REQUEST, id } }
+    function success(user) { return { type: userConstants.GET_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.GET_FAILURE, error } }
 }
 
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
+function update(user, current_user) {
     return dispatch => {
-        dispatch(request(id));
+        dispatch(request(user.id));
 
-        userService.delete(id)
+        userService.update(user)
             .then(
-                user => { 
-                    dispatch(success(id));
+                user => {
+                    dispatch(success(user));
+                    console.log(current_user);
+                    console.log(user);
+                    if(current_user.id == user.id) {
+                        dispatch(successLogin({ data: user }));
+                    }
+                    history.push('/dashboard');
                 },
                 error => {
-                    dispatch(failure(id, error));
+                	dispatch(failure(error));
                 }
             );
     };
 
-    function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
-    function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
-    function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
+    function request(id) { return { type: userConstants.UPDATE_REQUEST, id } }
+    function success(user) { return { type: userConstants.UPDATE_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
+    function successLogin(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
 }

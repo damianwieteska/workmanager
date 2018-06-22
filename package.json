@@ -7,6 +7,7 @@
     "haml-jsx-loader": "^1.0.2",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
+    "react-checkbox-group": "^4.0.1",
     "react-devise": "^0.0.19",
     "react-dom": "^16.4.0",
     "react-hot-loader": "^4.3.1",

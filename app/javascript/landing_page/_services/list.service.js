@@ -1,28 +1,18 @@
-import { authHeader } from '../_helpers';
+import { authHeader, axiosInstance } from '../_helpers';
 
-export const teamService = {
-    getForUser,
-    leave
+export const listService = {
+    get
 };
 
 const apiUrl = 'http://localhost:3000/api';
 
-function getForUser(user_id) {
+function get(project_id) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return fetch(`${apiUrl}/teams?user_id=${user_id}`, requestOptions).then(handleResponse);
-}
-
-function leave(id, user_id) {
-    const requestOptions = {
-        method: 'PATCH',
-        headers: authHeader()
-    };
- 
-    return fetch(`${apiUrl}/teams/${id}/leave?user_id=${user_id}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/projects/${project_id}/lists`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

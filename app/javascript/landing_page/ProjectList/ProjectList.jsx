@@ -13,7 +13,7 @@ class ProjectList extends React.Component {
               .list-group.list-group-flush
                 {projects.items.map((project, index) =>
                   (~
-                    %Link(to={`projects/${project.id}`} class="list-group-item list-group-item-action" key={index})
+                    %Link(to={`/projects/${project.id}`} class="list-group-item list-group-item-action" key={index})
                         {project.name}
                   ~)
                 )}

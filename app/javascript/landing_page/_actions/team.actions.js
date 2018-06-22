@@ -4,7 +4,8 @@ import { alertActions } from './';
 import { history } from '../_helpers';
 
 export const teamActions = {
-    getForUser
+    getForUser,
+    leave
 };
 
 function getForUser(user_id) {
@@ -23,3 +24,18 @@ function getForUser(user_id) {
     function failure(error) { return { type: teamConstants.GETFORUSER_FAILURE, error } }
 }
 
+function leave(id, user_id) {
+    return dispatch => {
+        dispatch(request(id));
+
+        teamService.leave(id, user_id)
+            .then(
+                team => dispatch(success(id)),
+                error => dispatch(failure(id, error.toString()))
+            );
+    };
+
+    function request(id) { return { type: teamConstants.LEAVE_REQUEST, id } }
+    function success(id) { return { type: teamConstants.LEAVE_SUCCESS, id } }
+    function failure(id, error) { return { type: teamConstants.LEAVE_FAILURE, id, error } }
+}

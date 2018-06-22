@@ -1,0 +1,5 @@
+export const listConstants = {
+    GET_REQUEST: 'LIST_GET_REQUEST',
+    GET_SUCCESS: 'LIST_GET_SUCCESS',
+    GET_FAILURE: 'LIST_GET_FAILURE',
+};

@@ -45,7 +45,7 @@ class Profile extends React.Component {
                ~)}
             %SkillList
 
-            %Link(to={`dashboard/users/${user.data.id}/edit`})
+            %Link(to={`/users/${user.data.id}/edit`})
               %button.btn.btn-dark
                 Edit
         ~);

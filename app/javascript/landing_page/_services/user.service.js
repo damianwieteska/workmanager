@@ -4,10 +4,8 @@ export const userService = {
     login,
     logout,
     register,
-    getAll,
-    getById,
-    update,
-    delete: _delete
+    get,
+    update
 };
 
 const apiUrl = 'http://localhost:3000/api';
@@ -20,7 +18,7 @@ function login(email, password) {
         body: JSON.stringify({ email, password })
     };
  
-    return fetch("http://localhost:3000/api/users/sign_in", requestOptions)
+    return fetch(`${apiUrl}/users/sign_in`, requestOptions)
         .then(user => {
             // login successful if there's a jwt token in the response
             if (user.data) {
@@ -36,16 +34,7 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-function getAll() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(`${apiUrl}/users`, requestOptions).then(handleResponse);
-}
-
-function getById(id) {
+function get(id) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
@@ -55,32 +44,24 @@ function getById(id) {
 }
 
 function register(user) {
-    axiosInstance.post('/users', { user } )
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-        return res;
-      });
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+    console.log(requestOptions.body);
+ 
+    return fetch(`${apiUrl}/users`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
     const requestOptions = {
         method: 'PUT',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify({user: user})
     };
 
     return fetch(`${apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
-}
-
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-    const requestOptions = {
-        method: 'DELETE',
-        headers: authHeader()
-    };
-
-    return fetch(`${apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

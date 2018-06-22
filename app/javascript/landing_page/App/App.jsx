@@ -5,6 +5,7 @@ import { alertActions } from '../_actions';
 import { routes } from '../_routes';
 import { history } from '../_helpers';
 import { ConnectedRouter } from 'connected-react-router';
+import { Header } from '../Header';
 
 class App extends React.Component {
     constructor(props) {
@@ -25,7 +26,10 @@ class App extends React.Component {
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
               }
               <Router history={history}>
-                { routes }
+                <div>
+                  <Header />
+                  { routes }
+                </div>
               </Router>
             </div>
         );

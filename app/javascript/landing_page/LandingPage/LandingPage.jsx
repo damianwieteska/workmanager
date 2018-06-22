@@ -16,6 +16,7 @@ const LandingPage = (props) => (~
             %button.btn.btn-lg.btn-success
               Sign up
           </Link>
+        %p
           <Link to='/login'>
             %button.btn.btn-lg.btn-outline-dark
               Log in
