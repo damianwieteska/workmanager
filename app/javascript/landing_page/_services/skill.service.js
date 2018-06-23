@@ -1,7 +1,8 @@
 import { authHeader } from '../_helpers';
 
 export const skillService = {
-    getForUser
+    getForUser,
+    getAll
 };
 
 const apiUrl = 'http://localhost:3000/api';
@@ -13,6 +14,15 @@ function getForUser(user_id) {
     };
 
     return fetch(`${apiUrl}/skills?user_id=${user_id}`, requestOptions).then(handleResponse);
+}
+
+function getAll() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${apiUrl}/skills`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

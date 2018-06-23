@@ -5,6 +5,7 @@ export const userService = {
     logout,
     register,
     get,
+    getAll,
     update
 };
 
@@ -43,13 +44,21 @@ function get(id) {
     return fetch(`${apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
+function getAll() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+ 
+    return fetch(`${apiUrl}/users`, requestOptions).then(handleResponse);
+}
+
 function register(user) {
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    console.log(requestOptions.body);
  
     return fetch(`${apiUrl}/users`, requestOptions).then(handleResponse);
 }

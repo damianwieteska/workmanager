@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       get :finished, on: :collection
       patch :leave, on: :member
       resources :lists, only: [:index, :create, :update, :destroy] do
-        resources :tasks, only: [:create, :update, :destroy]
+        resources :tasks, only: [:index, :create, :update, :destroy]
       end    
     end
 

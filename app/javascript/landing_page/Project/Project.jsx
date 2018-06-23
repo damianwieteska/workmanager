@@ -26,7 +26,6 @@ class Project extends React.Component {
                   %Link(to={'/projects'})
                     %button.btn.btn-outline-dark
                       Back
-                  {console.log(project.users.filter((u) => u.id === user.data.id).length)}
                   { project.users.filter((u) => u.id === user.data.id).length > 0 &&
                     (~
                       %a(onClick={this.handleLeaveProject(project.id)})
@@ -50,7 +49,7 @@ class Project extends React.Component {
                       <button className="btn btn-dark m-3" data-toggle="modal" data-target="#new-list-modal">
                         Add list
                       </button>
-                      %ListList(project_id={project.id})
+                      %ListList(projectId={project.id})
                     </div>
                     <div id="nav-info" className="tab-pane fade" role="tabpanel" aria-labelledby="nav-info-tab">
                       .row
@@ -90,7 +89,6 @@ class Project extends React.Component {
                             ~)
                           }
                     </div>
-
               ~)}
         ~);
     }

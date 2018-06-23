@@ -8,7 +8,8 @@ export const userActions = {
     logout,
     register,
     get,
-    update
+    update,
+    getAll
 };
 
 function login(email, password) {
@@ -78,6 +79,22 @@ function get(id) {
     function failure(error) { return { type: userConstants.GET_FAILURE, error } }
 }
 
+function getAll() {
+    return dispatch => {
+        dispatch(request());
+
+        userService.getAll()
+            .then(
+                users => dispatch(success(users)),
+                error => dispatch(failure(error))
+            );
+    };
+
+    function request() { return { type: userConstants.GETALL_REQUEST } }
+    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
+    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
 function update(user, current_user) {
     return dispatch => {
         dispatch(request(user.id));
@@ -86,8 +103,6 @@ function update(user, current_user) {
             .then(
                 user => {
                     dispatch(success(user));
-                    console.log(current_user);
-                    console.log(user);
                     if(current_user.id == user.id) {
                         dispatch(successLogin({ data: user }));
                     }

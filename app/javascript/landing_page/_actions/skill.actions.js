@@ -4,7 +4,8 @@ import { alertActions } from './';
 import { history } from '../_helpers';
 
 export const skillActions = {
-    getForUser
+    getForUser,
+    getAll
 };
 
 function getForUser(user_id) {
@@ -23,3 +24,18 @@ function getForUser(user_id) {
     function failure(error) { return { type: skillConstants.GETFORUSER_FAILURE, error } }
 }
 
+function getAll() {
+    return dispatch => {
+        dispatch(request());
+
+        skillService.getAll()
+            .then(
+                skills => dispatch(success(skills)),
+                error => dispatch(failure(error))
+            );
+    };
+
+    function request() { return { type: skillConstants.GETALL_REQUEST } }
+    function success(skills) { return { type: skillConstants.GETALL_SUCCESS, skills } }
+    function failure(error) { return { type: skillConstants.GETALL_FAILURE, error } }
+}

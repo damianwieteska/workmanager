@@ -18,7 +18,7 @@ class SkillList extends React.Component {
                 %p
                   %b Skills:
                   {skills.items.map((skill, index) =>
-                    `${skill.name}; `
+                    ` ${skill.name};`
                   )}
               ~)
             }

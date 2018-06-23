@@ -1,31 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { userActions } from '../_actions';
+import { userActions, skillActions } from '../_actions';
 import { UserForm } from '../UserForm';
 
 class EditUser extends React.Component {
     componentDidMount() {
     	const id = this.props.match.params.id;
+        this.props.dispatch(skillActions.getAll());
         this.props.dispatch(userActions.get(id));
     }
 
     render() {
-        const { users } = this.props;
+        const { users, skills } = this.props;
         return (~
           %div
-            {users.item &&
+            {users.item && skills.items &&
               (~
-                %UserForm(user={users.item} )
+                %UserForm(user={users.item} skills={skills.items} )
               ~)}
         ~);
     }
 }
 
 function mapStateToProps(state) {
-    const { users } = state;
+    const { users, skills } = state;
     return {
-        users
+        users,
+        skills
     };
 }
 

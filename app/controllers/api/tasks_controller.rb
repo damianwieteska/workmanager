@@ -1,14 +1,20 @@
 class Api::TasksController < Api::ApiController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_list, only: [:index]
+
+  def index
+    @tasks = @list.tasks
+    respond_with(@tasks)
+  end
 
   def create
     @project = Project.find(params[:project_id])
     @task = @project.lists.find(params[:list_id]).tasks.new(task_params)
     respond_to do |format|
       if @task.save
-        format.html { redirect_to project_path @project }
+        format.json { respond_with(@task) }
       else
-        format.html { redirect_to project_path(@project), flash: { danger: "Task can't be saved. Please check fields correctness." } }
+        format.json { render json: { error: @task.errors.full_messages }, status: :bad_request }
       end
     end
   end
@@ -17,9 +23,9 @@ class Api::TasksController < Api::ApiController
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to project_path @project }
+        format.json { respond_with(@task) }
       else
-        format.html { redirect_to project_path(@project), flash: { danger: "Task can't be updated. Please check fields correctness." } }
+        format.json { render json: { error: @task.errors.full_messages }, status: :bad_request }
       end
     end
   end
@@ -28,9 +34,9 @@ class Api::TasksController < Api::ApiController
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @task.destroy
-        format.html { redirect_to project_path @project }
+        format.json { respond_with(@task) }
       else
-        format.html { redirect_to project_path(@project), flash: { danger: "Task can't be deleted." } }
+        format.json { render json: { error: @task.errors.full_messages }, status: :bad_request }
       end
     end
   end
@@ -38,6 +44,10 @@ class Api::TasksController < Api::ApiController
   private
     def set_task
       @task = Task.find(params[:id])
+    end
+
+    def set_list
+      @list = List.find(params[:list_id])
     end
 
     def task_params

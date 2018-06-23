@@ -21,7 +21,8 @@ class UserForm extends React.Component {
                 linkedin_url: this.props.user.linkedin_url || '',
                 birthdate: this.props.user.birthdate || '',
                 birth_country: this.props.user.birth_country || '',
-                email: this.props.user.email || ''
+                email: this.props.user.email || '',
+                skill_ids: this.props.user.skill_ids || []
             },
             errors: {
               first_name: '',
@@ -32,6 +33,7 @@ class UserForm extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleSkillChange = this.handleSkillChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -46,6 +48,16 @@ class UserForm extends React.Component {
             errors: {
               ...errors,
               [name]: this.validateField(name, value)
+            }
+        });
+    }
+
+    handleSkillChange(newIds) {
+        const { user } = this.state;
+        this.setState({
+            user: {
+                ...user,
+                skill_ids: newIds
             }
         });
     }
@@ -113,11 +125,24 @@ class UserForm extends React.Component {
                         %label
                           Birthdate
                       .col-10
-                        %input( type="text" class="form-control" name="birthdate" value={user.birthdate} onChange={this.handleChange} )
+                        %input( type="text" class="form-control form-datepicker" name="birthdate" value={user.birthdate} onChange={this.handleChange} )
                   .field.form-group
                     %input( type="text" class="form-control" name="birth_country" value={user.birth_country} onChange={this.handleChange} placeholder="Birth country" )
                   %div(class={'field form-group' + ( errors.email ? ' field_with_errors' : '' ) })
                     %input( type="email" class="form-control" name="email" value={user.email} onChange={this.handleChange} placeholder="Email" autoComplete="email" )
+                  .field.form-group
+                    .row
+                      .col-2
+                        %label Skills:
+                      .col-10.checkbox-list
+                        %CheckboxGroup( name="skill_ids" checkboxDepth={2} value={user.skill_ids} onChange={this.handleSkillChange} )
+                          {this.props.skills.map((skill, index) =>
+                            (~
+                              %div(key={index})
+                                %Checkbox( value={skill.id} )
+                                {skill.name}
+                            ~)
+                          )}
 
                   .actions
                     %Link(to="/dashboard")

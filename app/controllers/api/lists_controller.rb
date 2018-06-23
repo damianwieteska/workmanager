@@ -12,9 +12,9 @@ class Api::ListsController < Api::ApiController
     @list = @project.lists.new(list_params)
     respond_to do |format|
       if @list.save
-        format.html { redirect_to project_path @project }
+        format.json { respond_with(@list) }
       else
-        format.html { redirect_to project_path(@project), flash: { danger: "List name can't be empty." } }
+        format.json { render json: { error: @list.errors.full_messages }, status: :bad_request }
       end
     end
   end
@@ -23,9 +23,9 @@ class Api::ListsController < Api::ApiController
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @list.update(list_params)
-        format.html { redirect_to project_path @project }
+        format.json { respond_with(@list) }
       else
-        format.html { redirect_to project_path(@project), flash: { danger: "List name can't be empty." } }
+        format.json { render json: { error: @list.errors.full_messages }, status: :bad_request }
       end
     end
   end
@@ -34,9 +34,9 @@ class Api::ListsController < Api::ApiController
     @project = Project.find(params[:project_id])
     respond_to do |format|
       if @list.destroy
-        format.html { redirect_to project_path @project }
+        format.json
       else
-        format.html { redirect_to project_path(@project), flash: { danger: "List can't be deleted." } }
+        format.json { render json: { error: @list.errors.full_messages }, status: :bad_request }
       end
     end
   end

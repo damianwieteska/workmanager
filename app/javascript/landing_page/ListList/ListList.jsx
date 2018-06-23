@@ -1,20 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { listActions } from '../_actions';
+import { listActions, userActions } from '../_actions';
 import { ListItem } from '../ListItem';
+import { ListForm } from '../ListForm';
 
 class ListList extends React.Component {
     componentDidMount() {
-        this.props.dispatch(listActions.get(this.props.project_id));
+        this.props.dispatch(listActions.get(this.props.projectId));
+        this.props.dispatch(userActions.getAll());
     }
 
     render() {
-        const { user, lists } = this.props;
+        const { user, lists, users } = this.props;
         return (~
           %div
             {lists.loading && <em>Loading lists...</em>}
-            {lists.items && (~
+            {lists.items && users.items && (~
               .row.sortable-lists
                 {lists.items.map((list, index) =>
                   (~
@@ -23,16 +25,18 @@ class ListList extends React.Component {
                 )}
               ~)
             }
+            %ListForm(projectId={this.props.projectId})
         ~);
     }
 }
 
 function mapStateToProps(state) {
-    const { lists, authentication } = state;
+    const { lists, users, authentication } = state;
     const { user } = authentication;
     return {
         user,
-        lists
+        lists,
+        users
     };
 }
 

@@ -14,6 +14,18 @@ export function skills(state = {}, action) {
       return { 
         error: action.error
       };
+    case skillConstants.GETALL_REQUEST:
+      return {
+        loading: true
+      };
+    case skillConstants.GETALL_SUCCESS:
+      return {
+        items: action.skills
+      };
+    case skillConstants.GETALL_FAILURE:
+      return { 
+        error: action.error
+      };
    default:
       return state
   }
