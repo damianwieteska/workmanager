@@ -2,24 +2,20 @@ class Api::UsersController < Api::ApiController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :dashboard]
 
   def index
-    #authorize! :read, @users
     @users = User.all
     respond_with(@users)
   end
 
   def show
-    #authorize! :read, @user
     respond_with(@user)
   end
 
   def dashboard
-    #authorize! :update, @user
     @projects = @user.all_projects.where("deadline > ? OR deadline IS NULL", DateTime.now)
     respond_with(@user)
   end
 
   def create
-    #authorize! :create, User
     @user = User.new(user_params)
     @user.skip_password_validation = true
 
