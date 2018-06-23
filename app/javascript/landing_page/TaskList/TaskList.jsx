@@ -11,6 +11,10 @@ class TaskList extends React.Component {
         this.props.dispatch(taskActions.get(list));
     }
 
+    componentDidUpdate() {
+        $('.sortable-tasks').sortable();
+    }
+
     render() {
         const { list, tasks } = this.props;
         return (~

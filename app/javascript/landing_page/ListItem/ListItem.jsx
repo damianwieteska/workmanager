@@ -14,22 +14,21 @@ class ListItem extends React.Component {
     render() {
         const { user, list } = this.props;
         return (~
-          %div
-            .col(id={list.sortable_id} )
-              .card
-                %h5.card-header
-                  {list.name}
-                  %a(onClick={this.handleDeleteList(list.id, list.project_id)})
-                    .btn.btn-sm.btn-danger.float-right
-                      Delete
-                  <div className="btn btn-sm btn-outline-dark float-right" data-toggle="modal" data-target={`#edit-list-modal-${list.id}`}>
-                    Edit
-                  </div>
+          .col(id={list.sortable_id} )
+            .card
+              %h5.card-header
+                {list.name}
+                %a(onClick={this.handleDeleteList(list.id, list.project_id)})
+                  .btn.btn-sm.btn-danger.float-right
+                    Delete
+                <div className="btn btn-sm btn-outline-dark float-right" data-toggle="modal" data-target={`#edit-list-modal-${list.id}`}>
+                  Edit
+                </div>
 
-                .card-body
-                  %TaskList(list={list})
-              .edit-list-modal
-                %EditListForm(list={list})
+              .card-body
+                %TaskList(list={list})
+            .edit-list-modal
+              %EditListForm(list={list})
 
         ~);
     }

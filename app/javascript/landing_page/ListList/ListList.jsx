@@ -11,6 +11,13 @@ class ListList extends React.Component {
         this.props.dispatch(userActions.getAll());
     }
 
+    componentDidUpdate() {
+        $('.sortable-lists').railsSortable({
+          axis: "x",
+          opacity: 0.9
+        });
+    }
+
     render() {
         const { user, lists, users } = this.props;
         return (~

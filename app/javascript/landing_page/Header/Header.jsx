@@ -9,7 +9,7 @@ class Header extends React.Component {
         const { user } = this.props;
         return (~
           %div
-            { user &&
+            { user && user.data &&
               (~
                 %nav#navbar-top.navbar.navbar-expand-lg.fixed-top
                   .navbar-brand
@@ -31,9 +31,9 @@ class Header extends React.Component {
                       %li.nav-item
                         %Link(to="/projects/finished" class="nav-link")
                           Finished projects
-                    { ( user.role == "moderator" || user.role == "admin" ) &&
+                    { ( user.data.role == "moderator" || user.data.role == "admin" ) &&
                       (~
-                        %Link(to="/admin/projects" class="nav-link")
+                        %a(href="/admin/users/sign_in" class="nav-link")
                           .btn.btn-outline-light
                             Admin panel
                       ~)}
